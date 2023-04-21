@@ -1,582 +1,979 @@
-package me.crimp.fusion.mod.modules.misc;
 
-import com.google.common.collect.Lists;
-import me.crimp.fusion.mod.modules.Module;
-import me.crimp.fusion.mod.setting.Bind;
-import me.crimp.fusion.mod.setting.Setting;
-import me.crimp.fusion.utils.ColorUtil;
-import me.crimp.fusion.utils.RenderUtil;
+
+ */
+package dev.nuker.pyro;
+
+import baritone.api.BaritoneAPI;
+import baritone.api.pathing.goals.Goal;
+import baritone.api.pathing.goals.GoalXZ;
+import baritone.api.utils.BetterBlockPos;
+import dev.nuker.pyro.Module;
+import dev.nuker.pyro.Pyro;
+import dev.nuker.pyro.PyroStatic;
+import dev.nuker.pyro.f0g;
+import dev.nuker.pyro.f3Y;
+import dev.nuker.pyro.f3Z;
+import dev.nuker.pyro.f41;
+import dev.nuker.pyro.f43;
+import dev.nuker.pyro.f49;
+import dev.nuker.pyro.f4A;
+import dev.nuker.pyro.f4I;
+import dev.nuker.pyro.f4c;
+import dev.nuker.pyro.f4e;
+import dev.nuker.pyro.f4r;
+import dev.nuker.pyro.f4t;
+import dev.nuker.pyro.f4u;
+import dev.nuker.pyro.f7B;
+import dev.nuker.pyro.f7C;
+import dev.nuker.pyro.f7E;
+import dev.nuker.pyro.f7F;
+import dev.nuker.pyro.f7H;
+import dev.nuker.pyro.f7I;
+import dev.nuker.pyro.f7J;
+import dev.nuker.pyro.f7K;
+import dev.nuker.pyro.f7L;
+import dev.nuker.pyro.f7M;
+import dev.nuker.pyro.f7N;
+import dev.nuker.pyro.f7O;
+import dev.nuker.pyro.f7z;
+import dev.nuker.pyro.f83;
+import dev.nuker.pyro.fdN;
+import dev.nuker.pyro.fe5;
+import dev.nuker.pyro.fe8;
+import dev.nuker.pyro.feg;
+import dev.nuker.pyro.few;
+import dev.nuker.pyro.mixin.GuiDisconnectedAccessor;
+import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import kotlin.TypeCastException;
+import kotlin.collections.CollectionsKt;
+import kotlin.concurrent.ThreadsKt;
+import kotlin.jvm.internal.Intrinsics;
+import kotlin.jvm.internal.Ref;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemShulkerBox;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiDisconnected;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityBoat;
+import net.minecraft.entity.item.EntityMinecartEmpty;
+import net.minecraft.entity.passive.AbstractChestHorse;
+import net.minecraft.entity.passive.EntityDonkey;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.network.play.client.CPacketUseEntity;
+import net.minecraft.network.play.client.CPacketVehicleMove;
+import net.minecraft.network.play.server.SPacketSetPassengers;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+public class f7G
+extends Module {
+    @Nullable
+    public ServerSocket Field3132;
+    @Nullable
+    public Thread Field3133;
+    @Nullable
+    public f7B Field3134;
+    @NotNull
+    public List<f7B> Field3135;
+    public int Field3136;
+    public boolean Field3137;
+    @Nullable
+    public MessagePassingQueue.Consumer<Boolean> Field3138;
+    @NotNull
+    public CopyOnWriteArrayList<Integer> Field3139;
+    public boolean Field3140;
+    @Nullable
+    public fe8 Field3141;
+    public boolean Field3142;
+    public int Field3143;
+    @NotNull
+    public fe8 Field3144;
+    public boolean Field3145;
+    public boolean Field3146;
+    public boolean Field3147;
+    public int Field3148;
+    @Nullable
+    public fe8 Field3149;
+    @NotNull
+    public CopyOnWriteArrayList<Integer> Field3150;
+    @Nullable
+    public MessagePassingQueue.Consumer<Boolean> Field3151;
+    public boolean Field3152;
+    @Nullable
+    public Vec3d Field3153;
+    public boolean Field3154;
+    @Nullable
+    public fe8 Field3155;
+    public boolean Field3156;
+    @Nullable
+    public Vec3d Field3157;
+    @Nullable
+    public Vec3d Field3158;
+    @Nullable
+    public BlockPos Field3159;
+    public boolean Field3160;
+    @NotNull
+    public static f4c Field3161;
+    public static f7z Field3162;
 
-
-public class ShulkerPreview extends Module {
-    private static final ResourceLocation SHULKER_GUI_TEXTURE = new ResourceLocation("textures/gui/container/shulker_box.png");
-    public Setting<Bind> Keybind = register(new Setting<>("ShulkerPreviewBind", new Bind(Keyboard.KEY_B)));
-
-    public ShulkerPreview() {
-        super("ShulkerPreview", "Displays the contents of a shulker box when hovered over in a GUI", Category.Render, false, false);
+    public void Method551(int n) {
+        this.Field3136 = n;
     }
 
-    public static ItemStack itemStack;
-    public static int mouseX = 0;
-    public static int mouseY = 0;
-    private static final int SHULKER_GUI_SIZE = 16 + 54 + 6;
-
-    private static final int CACHE_HOVERING_INDEX = 0;
-    private static final int CACHE_HOLDING_INDEX = 1;
-    private static final int CACHE_RESERVE_SIZE = 2;
-
-    private final List<GuiShulkerViewer> guiCache =
-            Lists.newArrayListWithExpectedSize(CACHE_RESERVE_SIZE);
-    private final Lock cacheLock = new ReentrantLock();
-
-    private boolean locked = false;
-    private boolean updated = false;
-
-    private boolean isMouseInShulkerGui = false;
-    private boolean isModGeneratedToolTip = false;
-
-    private int lastX = -1;
-    private int lastY = -1;
-
-    public static <T> boolean isInRange(Collection<T> list, int index) {
-        return list != null && index >= 0 && index < list.size();
+    public boolean Method2390() {
+        return this.Field3145;
     }
 
-    private boolean isLocked() {
-        return locked && updated;
+    public void Method4977(int n) {
+        this.Field3143 = n;
     }
 
-    private boolean setInCache(int index, @Nullable GuiShulkerViewer viewer) {
-        if (index < 0) {
-            return false;
-        } else if (viewer == null && index > (CACHE_RESERVE_SIZE - 1) && index == guiCache.size() - 1) {
-            guiCache.remove(index); // remove non-reserved extras
-            int previous = index - 1;
-            if (previous > (CACHE_RESERVE_SIZE - 1)
-                    && !getInCache(previous)
-                    .isPresent()) // check if previous entry is null and remove it recursively if it is
-            {
-                return setInCache(previous, null);
+    @NotNull
+    public List Method4978() {
+        ArrayList<Entity> arrayList = new ArrayList<Entity>();
+        for (Entity entity : this.Field5233.world.loadedEntityList) {
+            if (!(entity instanceof AbstractChestHorse) || !((AbstractChestHorse)entity).hasChest() || !((AbstractChestHorse)entity).isRiding() || !(((AbstractChestHorse)entity).getRidingEntity() instanceof EntityBoat)) continue;
+            arrayList.add(entity);
+        }
+        return arrayList;
+    }
+
+    public boolean Method4979() {
+        return this.Field3152;
+    }
+
+    public static void Method4980(f7G f7G2, Minecraft minecraft) {
+        f7G2.Field5233 = minecraft;
+    }
+
+    @f0g
+    public void Method4981(@NotNull f4A f4A2) {
+        if (this.Field3137) {
+            if (this.Field5233.player.isRiding()) {
+                f4A2.Method7948();
+                this.Field5233.player.movementInput.sneak = true;
             } else {
-                return true;
+                this.Field3137 = false;
+                Pyro.Field6182.Method8989("Dismounted sucessfully!");
+                f4A2.Method7948();
+                this.Field5233.player.movementInput.sneak = false;
+                if (this.Field3138 != null) {
+                    MessagePassingQueue.Consumer<Boolean> consumer = this.Field3138;
+                    if (consumer == null) {
+                        Intrinsics.Method6551();
+                    }
+                    consumer.accept((Object)true);
+                }
             }
-        } else if (index > guiCache.size() - 1) { // array not big enough
-            for (int i = Math.max(guiCache.size(), 1); i < index; ++i) {
-                guiCache.add(i, null); // fill with nulls up to the index
+        }
+    }
+
+    public void Method557(boolean bl) {
+        this.Field3156 = bl;
+    }
+
+    public void Method2286(@NotNull BlockPos blockPos) {
+        this.Method5002();
+        GoalXZ goalXZ = new GoalXZ(new BetterBlockPos(blockPos));
+        BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath((Goal)goalXZ);
+        this.Field3153 = new Vec3d((double)blockPos.getX(), (double)blockPos.getY(), (double)blockPos.getZ());
+        this.Field3152 = true;
+    }
+
+    public void Method4982(@NotNull f3Y f3Y2, @NotNull f7B f7B2) {
+        f3Z.Field3928.Method5628(f3Y2, Field3161, f7B2.Method5090());
+    }
+
+    @f0g
+    public void Method244(@NotNull f4e f4e2) {
+        if (f4e2.Method5619() == f41.Pre && f4e2.Method5784() instanceof SPacketSetPassengers) {
+            Packet packet = f4e2.Method5784();
+            if (packet == null) {
+                throw new TypeCastException("null cannot be cast to non-null type net.minecraft.network.play.server.SPacketSetPassengers");
             }
-            guiCache.add(index, viewer);
-            return true;
+            SPacketSetPassengers sPacketSetPassengers = (SPacketSetPassengers)packet;
+        }
+    }
+
+    public void Method4983() {
+        this.Field3157 = this.Field5233.player.getPositionVector();
+        Pyro.Field6182.Method8989("Set the start pos");
+    }
+
+    public void Method4984(boolean bl) {
+        this.Field3147 = bl;
+    }
+
+    @Nullable
+    public Vec3d Method4985() {
+        return this.Field3157;
+    }
+
+    public void Method4986() {
+        if (this.Field5233.objectMouseOver != null && this.Field5233.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
+            Block block = feg.Method690(this.Field5233.objectMouseOver.getBlockPos());
+            if (block instanceof BlockButton) {
+                this.Field3159 = this.Field5233.objectMouseOver.getBlockPos();
+                Pyro.Field6182.Method8989("Set the button!");
+                return;
+            }
+        }
+        Pyro.Field6182.Method8989("WARNING! invalid button");
+    }
+
+    public void Method4987(@Nullable MessagePassingQueue.Consumer consumer) {
+        this.Field3151 = consumer;
+    }
+
+    @Nullable
+    public Vec3d Method4988() {
+        return this.Field3158;
+    }
+
+    public void Method4989() {
+        this.Field3137 = false;
+        this.Field3138 = null;
+        this.Field3139.clear();
+        this.Field3140 = false;
+        this.Field3141 = null;
+        this.Field3142 = false;
+        this.Field3145 = false;
+        this.Field3146 = false;
+        this.Field3147 = false;
+        this.Field3148 = this.Field3135.size();
+        this.Field3149 = null;
+        this.Field3143 = -1;
+        this.Field3150.clear();
+        this.Field3151 = null;
+        this.Field3152 = false;
+        this.Field3153 = null;
+        this.Field3154 = false;
+        this.Field3155 = null;
+        this.Field3156 = false;
+    }
+
+    public boolean Method4990() {
+        return this.Field3132 != null;
+    }
+
+    /*
+     * Enabled force condition propagation
+     * Lifted jumps to return sites
+     */
+    public boolean Method4991() {
+        if (!this.Field5233.player.isRiding()) return false;
+        if (!(this.Field5233.player.getRidingEntity() instanceof EntityMinecartEmpty)) return false;
+        return true;
+    }
+
+    public void Method4992(@Nullable f7B f7B2) {
+        this.Field3134 = f7B2;
+    }
+
+    @Nullable
+    public MessagePassingQueue.Consumer Method4993() {
+        return this.Field3151;
+    }
+
+    public void Method4994(@Nullable Vec3d vec3d) {
+        this.Field3153 = vec3d;
+    }
+
+    @Nullable
+    public fe8 Method4995() {
+        return this.Field3149;
+    }
+
+    public boolean Method4996() {
+        return this.Field3160;
+    }
+
+    public void Method4997() {
+        if (this.Field5233.player != null) {
+            this.Field3160 = false;
+            PyroStatic.Field6415.Field5236.Method5266(true);
+            PyroStatic.Field6415.Method238().Method7975(900.0);
+            this.Field3144.Method490();
+            this.Field3145 = true;
+            NetHandlerPlayClient netHandlerPlayClient = this.Field5233.getConnection();
+            if (netHandlerPlayClient == null) {
+                Intrinsics.Method6551();
+            }
+            netHandlerPlayClient.getNetworkManager().closeChannel((ITextComponent)new TextComponentString("Waiting for other client to tell us we can reconnect"));
         } else {
-            guiCache.set(index, viewer);
-            return true;
+            String string = "recv disconnect but already DC!";
+            boolean bl = false;
+            System.out.println((Object)string);
         }
     }
 
-    private boolean appendInCache(@Nonnull GuiShulkerViewer viewer) {
-        return setInCache(Math.max(guiCache.size() - 1, CACHE_RESERVE_SIZE), viewer);
-    }
-
-    private Optional<GuiShulkerViewer> getInCache(int index) {
-        return isInRange(guiCache, index)
-                ? Optional.ofNullable(guiCache.get(index))
-                : Optional.empty();
-    }
-
-    private void clearCache() {
-        for (int i = 0; i < CACHE_RESERVE_SIZE; ++i) {
-            setInCache(
-                    i, null); // set all reserve slots to null, and add them if they don't already exist
+    public void Method4998(@NotNull f3Y f3Y2, @NotNull f7B f7B2) {
+        f3Y f3Y3 = f3Y2;
+        if (f3Y3 instanceof f7J) {
+            Pyro.Field6182.Method8989("PING: " + ((f7J)f3Y2).Method5103());
+            if (Intrinsics.Method6572(((f7J)f3Y2).Method5103(), "Ping")) {
+                this.Method4982(new f7J("Pong"), f7B2);
+            }
+        } else if (f3Y3 instanceof f7O) {
+            this.Method2491();
+        } else if (f3Y3 instanceof f7M) {
+            this.Method5041((f7M)f3Y2, f7B2);
+        } else if (f3Y3 instanceof f7N) {
+            this.Method5019((f7N)f3Y2);
+        } else if (f3Y3 instanceof f7H) {
+            this.Method5028();
+        } else if (f3Y3 instanceof f7I) {
+            this.Method4997();
+        } else if (f3Y3 instanceof f7L) {
+            this.Method5033();
+        } else if (f3Y3 instanceof f7K) {
+            this.Method5008();
         }
-        while (guiCache.size() > CACHE_RESERVE_SIZE) {
-            setInCache(guiCache.size() - 1, null); // clear the rest
-        }
     }
 
-    public void reset() {
-        boolean isKeySet = false;
-        locked = updated = isKeySet = isMouseInShulkerGui = isModGeneratedToolTip = false;
-        lastX = lastY = -1;
-        clearCache();
+    public void Method2406(boolean bl) {
+        this.Field3145 = bl;
     }
 
-    public static List<ItemStack> getShulkerContents(ItemStack stack) { // TODO: move somewhere else
-        NonNullList<ItemStack> contents = NonNullList.withSize(27, ItemStack.EMPTY);
-        NBTTagCompound compound = stack.getTagCompound();
-        if (compound != null && compound.hasKey("BlockEntityTag", 10)) {
-            NBTTagCompound tags = compound.getCompoundTag("BlockEntityTag");
-            if (tags.hasKey("Items", 9)) {
-                // load in the items
-                ItemStackHelper.loadAllItems(tags, contents);
+    public int Method539() {
+        return this.Field3136;
+    }
+
+    public void Method2413(boolean bl) {
+        this.Field3152 = bl;
+    }
+
+    @Nullable
+    public MessagePassingQueue.Consumer Method4999() {
+        return this.Field3138;
+    }
+
+    public void Method5000() {
+        this.Field3158 = this.Field5233.player.getPositionVector();
+        Pyro.Field6182.Method8989("Set the quarry pos");
+    }
+
+    public boolean Method5001() {
+        return this.Field3137;
+    }
+
+    public void Method5002() {
+        BaritoneAPI.getSettings().allowSprint.value = true;
+        BaritoneAPI.getSettings().allowBreak.value = false;
+        BaritoneAPI.getSettings().primaryTimeoutMS.value = 2000L;
+    }
+
+    public boolean Method4930() {
+        return this.Field3147;
+    }
+
+    public void Method5003(@Nullable fe8 fe82) {
+        this.Field3141 = fe82;
+    }
+
+    public void Method541(int n) {
+        this.Field3136 = n;
+        this.Field3132 = new ServerSocket(n);
+        this.Field3133 = ThreadsKt.Method9564(true, false, null, null, 0, new f7F(this), 30, null);
+    }
+
+    @Nullable
+    public EntityMinecartEmpty Method5004() {
+        if (this.Method4991()) {
+            Entity entity = this.Field5233.player.getRidingEntity();
+            if (entity == null) {
+                Intrinsics.Method6551();
+            }
+            if (!this.Field3139.contains(entity.getEntityId())) {
+                Entity entity2 = this.Field5233.player.getRidingEntity();
+                if (entity2 == null) {
+                    Intrinsics.Method6551();
+                }
+                this.Field3139.add(entity2.getEntityId());
             }
         }
-        return contents;
+        EntityMinecartEmpty entityMinecartEmpty = null;
+        float f = 1000.0f;
+        for (Entity entity : this.Field5233.world.loadedEntityList) {
+            float f2;
+            if (!(entity instanceof EntityMinecartEmpty) || this.Field3139.contains(((EntityMinecartEmpty)entity).getEntityId()) || !((f2 = this.Field5233.player.getDistance(entity)) < f) || !fdN.Method348(entity)) continue;
+            f = f2;
+            entityMinecartEmpty = (EntityMinecartEmpty)entity;
+        }
+        return entityMinecartEmpty;
     }
 
-    private GuiShulkerViewer newShulkerGui(ItemStack parentShulker, int priority) {
-        return new GuiShulkerViewer(
-                new ShulkerContainer(new ShulkerInventory(getShulkerContents(parentShulker)), 27), parentShulker, priority);
+    public void Method2491() {
+        this.Field5236.Method5266(false);
+        this.Field5236.Method5266(true);
+        this.Field3160 = true;
+        Pyro.Field6182.Method8989("Received start packet!");
+        this.Field3140 = true;
     }
 
+    public static f4c Method5005() {
+        return Field3161;
+    }
 
     @Override
-    public void onEnable() {
-        cacheLock.lock();
-        try {
-            reset();
-        } finally {
-            cacheLock.unlock();
+    public void Method205(boolean bl, @Nullable EntityPlayerSP entityPlayerSP, @Nullable World world) {
+        block2: {
+            block4: {
+                block3: {
+                    super.Method205(bl, entityPlayerSP, world);
+                    this.Method4989();
+                    if (!bl || !this.Method4990()) break block2;
+                    if (this.Field3159 == null) break block3;
+                    if (this.Field3158 != null && this.Field3157 != null) break block4;
+                }
+                Pyro.Field6182.Method8989("Bad config. You didn't set a position");
+                this.Field5236.Method5266(false);
+                return;
+            }
+            Pyro.Field6182.Method8989("Starting the dupe..... sending the packet to all clients to start!");
+            this.Method5012(new f7O());
         }
     }
 
-
-
-    @SubscribeEvent
-    public void onKeyboardInput(GuiScreenEvent.KeyboardInputEvent event) {
-        locked = Keyboard.isKeyDown(Keybind.getValue().getKey());
+    public void Method316(@NotNull CopyOnWriteArrayList copyOnWriteArrayList) {
+        this.Field3150 = copyOnWriteArrayList;
     }
 
-    @SubscribeEvent
-    public void onPreTooptipRender(RenderTooltipEvent.Pre event) {
-        if (!(mc.currentScreen instanceof GuiContainer) || isModGeneratedToolTip) {
+    public void Method5006(@NotNull String string, int n) {
+        this.Field3136 = n;
+        this.Field3134 = new f7B(this, new Socket(string, n));
+    }
+
+    public void Method5007(@Nullable Vec3d vec3d) {
+        this.Field3158 = vec3d;
+    }
+
+    public void Method5008() {
+        f7G f7G2 = this;
+        f7G2.Field3148 += -1;
+        if (f7G2.Field3148 <= 0) {
+            this.Method4989();
+            Pyro.Field6182.Method8989("Repeating the dupe!!..... sending the packet to all clients to start!");
+            this.Method5012(new f7O());
+        }
+    }
+
+    public void Method209(@Nullable BlockPos blockPos) {
+        this.Field3159 = blockPos;
+    }
+
+    public void Method5009(@NotNull CopyOnWriteArrayList copyOnWriteArrayList) {
+        this.Field3139 = copyOnWriteArrayList;
+    }
+
+    public int Method5010() {
+        return this.Field3148;
+    }
+
+    public void Method2276(@Nullable Thread thread2) {
+        this.Field3133 = thread2;
+    }
+
+    public void Method5011(@Nullable fe8 fe82) {
+        this.Field3155 = fe82;
+    }
+
+    public void Method5012(@NotNull f3Y f3Y2) {
+        if (this.Method4990()) {
+            Iterable iterable = this.Field3135;
+            boolean bl = false;
+            for (Object t : iterable) {
+                f7B f7B2 = (f7B)t;
+                boolean bl2 = false;
+                this.Method4982(f3Y2, f7B2);
+            }
+        } else {
+            f7B f7B3 = this.Field3134;
+            if (f7B3 == null) {
+                Intrinsics.Method6551();
+            }
+            this.Method4982(f3Y2, f7B3);
+        }
+    }
+
+    public void Method5013(@NotNull fe8 fe82) {
+        this.Field3144 = fe82;
+    }
+
+    @NotNull
+    public CopyOnWriteArrayList Method5014() {
+        return this.Field3150;
+    }
+
+    public void Method2402(boolean bl) {
+        this.Field3160 = bl;
+    }
+
+    @Override
+    public void Method195(@Nullable Vec3d vec3d, float f) {
+        super.Method195(vec3d, f);
+        if (this.Field3159 != null) {
+            fe5.Field252.Method408(7);
+            BlockPos blockPos = this.Field3159;
+            if (blockPos == null) {
+                Intrinsics.Method6551();
+            }
+            fe5.Field252.Method410(blockPos, 0x3FFF0000, 63);
+            fe5.Field252.Method405();
+        }
+    }
+
+    public int Method5015() {
+        return this.Field3143;
+    }
+
+    public f7G() {
+        super("autodupe", "AutoDupe", null);
+        List list;
+        f7G f7G2 = this;
+        boolean bl = false;
+        f7G2.Field3135 = list = (List)new ArrayList();
+        this.Field3136 = -1;
+        this.Field3139 = new CopyOnWriteArrayList();
+        this.Field3143 = -1;
+        this.Field3144 = new fe8();
+        this.Field3150 = new CopyOnWriteArrayList();
+    }
+
+    static {
+        Field3162 = new f7z(null);
+        Field3161 = new f4c(CollectionsKt.Method1018(f7J.class, f7O.class, f7M.class, f7N.class, f7H.class, f7I.class, f7L.class, f7K.class));
+    }
+
+    @Nullable
+    public ServerSocket Method5016() {
+        return this.Field3132;
+    }
+
+    public boolean Method4876() {
+        return this.Field3140;
+    }
+
+    public void Method5017(boolean bl) {
+        this.Field3154 = bl;
+    }
+
+    public boolean Method5018() {
+        return this.Field3154;
+    }
+
+    public void Method5019(@NotNull f7N f7N2) {
+        int n;
+        Pyro.Field6182.Method8989("Received RideEntityIDPacket with entityid " + f7N2.Method5103());
+        Pyro.Field6182.Method8989("Sending the packet....");
+        String string = f7N2.Method5103();
+        f7G f7G2 = this;
+        boolean bl = false;
+        f7G2.Field3143 = n = Integer.parseInt(string);
+        string = new EntityDonkey((World)this.Field5233.world);
+        string.setEntityId(this.Field3143);
+        NetHandlerPlayClient netHandlerPlayClient = this.Field5233.getConnection();
+        if (netHandlerPlayClient == null) {
+            Intrinsics.Method6551();
+        }
+        netHandlerPlayClient.sendPacket((Packet)new CPacketUseEntity((Entity)string, EnumHand.MAIN_HAND));
+        this.Method5012(new f7H());
+    }
+
+    public boolean Method5020() {
+        return this.Field3142;
+    }
+
+    public static Minecraft Method5021(f7G f7G2) {
+        return f7G2.Field5233;
+    }
+
+    @f0g
+    public void Method5022(@NotNull f4I f4I2) {
+        if (this.Method4990() && f4I2.Method5702() instanceof AbstractChestHorse && this.Field3156) {
+            int n = f4I2.Method5702().getEntityId();
+            if (this.Field3150.contains(n)) {
+                this.Field3150.remove((Object)n);
+            }
+            if (this.Field3150.isEmpty()) {
+                Pyro.Field6182.Method8989("All duped donkies are dead!");
+                PyroStatic.Field6445.Field5236.Method5266(false);
+                this.Method5012(new f7L());
+                Vec3d vec3d = this.Field3157;
+                if (vec3d == null) {
+                    Intrinsics.Method6551();
+                }
+                this.Method2283(vec3d);
+            } else {
+                Pyro.Field6182.Method8989("Waiting for " + this.Field3150.size() + " more donkies to be killed!");
+            }
+        }
+    }
+
+    public boolean Method5023() {
+        return this.Field3156;
+    }
+
+    public void Method5024(@Nullable Vec3d vec3d) {
+        this.Field3157 = vec3d;
+    }
+
+    public void Method5025(boolean bl) {
+        this.Field3146 = bl;
+    }
+
+    public boolean Method5026() {
+        return this.Field3146;
+    }
+
+    @Nullable
+    public fe8 Method5027() {
+        return this.Field3141;
+    }
+
+    @f0g
+    public void Method2393(@NotNull f49 f492) {
+        if (f492.Method5619() == f41.Pre && this.Field3160) {
+            Packet packet = f492.Method5784();
+            if (packet instanceof CPacketVehicleMove) {
+                f492.Method7948();
+            } else if (packet instanceof CPacketPlayer) {
+                f492.Method7948();
+            }
+        }
+    }
+
+    public void Method5028() {
+        f7G f7G2 = this;
+        f7G2.Field3148 += -1;
+        if (f7G2.Field3148 <= 0) {
+            Pyro.Field6182.Method8989("Received enough accounts riding! riding the minecart!");
+            this.Field3140 = true;
+        }
+    }
+
+    public void Method5029(int n) {
+        this.Field3148 = n;
+    }
+
+    @Nullable
+    public f7B Method5030() {
+        return this.Field3134;
+    }
+
+    @f0g
+    public void Method183(@NotNull f4t f4t2) {
+        if (this.Field3149 != null) {
+            fe8 fe82 = this.Field3149;
+            if (fe82 == null) {
+                Intrinsics.Method6551();
+            }
+            if (fe82.Method491(10000.0)) {
+                this.Field3149 = null;
+            }
             return;
         }
-
-        if (isMouseInShulkerGui) {
-            // do not render tool tips that are inside the region of our shulker gui
-            event.setCanceled(true);
-        } else if (event.getStack().getItem() instanceof ItemShulkerBox) {
-            event.setCanceled(true); // do not draw normal tool tip
-        }
-    }
-
-    @SubscribeEvent
-    public void onGuiChanged(GuiOpenEvent event) {
-        if (event.getGui() == null) {
-            reset();
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void onRender(GuiScreenEvent.DrawScreenEvent.Post event) {
-        if (mc.currentScreen instanceof GuiContainer) {
-            cacheLock.lock();
-            try {
-                GuiContainer gui = (GuiContainer) event.getGui();
-
-                if (!isLocked()) {
-                    // show stats for the item being hovered over
-                    Slot slotUnder = gui.getSlotUnderMouse();
-                    if (slotUnder == null
-                            || !slotUnder.getHasStack()
-                            || slotUnder.getStack().isEmpty()
-                            || !(slotUnder.getStack().getItem() instanceof ItemShulkerBox)) {
-                        setInCache(CACHE_HOVERING_INDEX, null);
-                    } else if (!ItemStack.areItemStacksEqual(
-                            (ItemStack) getInCache(1).map(GuiShulkerViewer::getParentShulker).orElse(ItemStack.EMPTY),
-                            slotUnder.getStack())) {
-                        setInCache(CACHE_HOVERING_INDEX, newShulkerGui(slotUnder.getStack(), 1));
-                    }
-
-                    // show stats for held item
-                    ItemStack stackHeld = mc.player.inventory.getItemStack();
-                    if (stackHeld.isEmpty() || !(stackHeld.getItem() instanceof ItemShulkerBox)) {
-                        setInCache(CACHE_HOLDING_INDEX, null);
-                    } else if (!ItemStack.areItemStacksEqual(
-                            (ItemStack) getInCache(1).map(GuiShulkerViewer::getParentShulker).orElse(ItemStack.EMPTY),
-                            stackHeld)) {
-                        setInCache(CACHE_HOLDING_INDEX, newShulkerGui(stackHeld, 0));
-                    }
-
-                    if (locked && !updated && guiCache.stream().anyMatch(Objects::nonNull)) {
-                        updated = true;
-                    }
-                }
-
-                int renderX;
-                int renderY;
-                if (!isLocked() || (lastX == -1 && lastY == -1)) {
-                    int count = (int) guiCache.stream().filter(Objects::nonNull).count();
-                    int x_offset = 8;
-                    int y_offset = 0;
-                    renderX = lastX = event.getMouseX() + x_offset;
-                    renderY = lastY = event.getMouseY() - (SHULKER_GUI_SIZE * count) / 2 + y_offset;
-                } else {
-                    renderX = lastX;
-                    renderY = lastY;
-                }
-
-                isMouseInShulkerGui = false; // recheck
-
-                // Add null check here
-                if (guiCache != null) {
-                    for (GuiShulkerViewer ui : guiCache) {
-                        ui.posX = renderX;
-                        ui.posY = renderY;
-                        ui.drawScreen(event.getMouseX(), event.getMouseY(), event.getRenderPartialTicks());
-                        renderY = renderY + SHULKER_GUI_SIZE + 1;
-                    }
-                }
-
-            } finally {
-                cacheLock.unlock();
+        if (this.Field3155 != null) {
+            fe8 fe83 = this.Field3155;
+            if (fe83 == null) {
+                Intrinsics.Method6551();
             }
-            GlStateManager.enableDepth();
-            GlStateManager.enableLighting();
-            GlStateManager.color(1.f, 1.f, 1.f, 1.0f);
+            if (fe83.Method491(3000.0)) {
+                this.Method5012(new f7K());
+                Pyro.Field6182.Method8989("Sent the ready packet!");
+                this.Field3155 = null;
+                this.Field5236.Method5266(false);
+            }
+            return;
         }
-    }
-
-    class GuiShulkerViewer extends GuiContainer implements Comparable<GuiShulkerViewer> {
-
-        private final ItemStack parentShulker;
-        private final int priority;
-
-        public int posX = 0;
-        public int posY = 0;
-
-        public GuiShulkerViewer(Container inventorySlotsIn, ItemStack parentShulker, int priority) {
-            super(inventorySlotsIn);
-            this.parentShulker = parentShulker;
-            this.priority = priority;
-            this.width = mc.displayWidth;
-            this.height = mc.displayHeight;
-            this.xSize = 176;
-            this.ySize = SHULKER_GUI_SIZE;
-
+        if (this.Field3152) {
+            double d;
+            Vec3d vec3d = this.Field3153;
+            if (vec3d == null) {
+                Intrinsics.Method6551();
+            }
+            Vec3d vec3d2 = this.Field3153;
+            if (vec3d2 == null) {
+                Intrinsics.Method6551();
+            }
+            Vec3d vec3d3 = this.Field3153;
+            if (vec3d3 == null) {
+                Intrinsics.Method6551();
+            }
+            if ((d = this.Field5233.player.getDistance(vec3d.x, vec3d2.y, vec3d3.z)) <= (double)2) {
+                this.Field3152 = false;
+                if (this.Field3151 != null) {
+                    Pyro.Field6182.Method8989("Accepting callback of baritone");
+                    MessagePassingQueue.Consumer<Boolean> consumer = this.Field3151;
+                    if (consumer == null) {
+                        Intrinsics.Method6551();
+                    }
+                    consumer.accept((Object)true);
+                    this.Field3151 = null;
+                }
+            }
         }
-
-
-        @Override
-        public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-            final int DEPTH = 500;
-
-            int x = posX;
-            int y = posY;
-
-            GlStateManager.enableTexture2D();
-            GlStateManager.disableLighting();
-//            JsonArray tooltip_opacity = null;
-//            JsonArray locked_opacity = null;
-//            GlStateManager.color(
-//                    1.f,
-//                    1.f,
-//                    1.f,
-//                    !isLocked()
-//                            ? (tooltip_opacity.getAsFloat() / 255.f)
-//                            : (locked_opacity.getAsFloat() / 255.f));
-
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(
-                    GlStateManager.SourceFactor.SRC_ALPHA,
-                    GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-                    GlStateManager.SourceFactor.ONE,
-                    GlStateManager.DestFactor.ZERO);
-
-            mc.getTextureManager().bindTexture(SHULKER_GUI_TEXTURE);
-
-            // width 176        = width of container
-            // height 16        = top of the gui
-            // height 54        = gui item boxes
-            // height 6         = bottom of the gui
-            RenderUtil.drawTexturedRect(x, y, 0, 0, 176, 16, DEPTH);
-            RenderUtil.drawTexturedRect(x, y + 16, 0, 16, 176, 54, DEPTH);
-            RenderUtil.drawTexturedRect(x, y + 16 + 54, 0, 160, 176, 6, DEPTH);
-
-            GlStateManager.disableDepth();
-            mc.fontRenderer.drawStringWithShadow(parentShulker.getDisplayName(), x + 8, y + 6, ColorUtil.toRGBA(255,255,255,255));
-            GlStateManager.enableDepth();
-
-            RenderHelper.enableGUIStandardItemLighting();
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.enableColorMaterial();
-            GlStateManager.enableLighting();
-
-            Slot hoveringOver = null;
-
-            int rx = x + 8;
-            int ry = y - 1;
-
-            for (Slot slot : inventorySlots.inventorySlots) {
-                if (slot.getHasStack()) {
-                    int px = rx + slot.xPos;
-                    int py = ry + slot.yPos;
-                    mc.getRenderItem().zLevel = DEPTH + 1;
-                    //drawitem(slot.getStack(), px, py);
-                    renderItemOverlayIntoGUI(slot.getStack(), px, py,null);
-                    mc.getRenderItem().zLevel = 0.f;
-                    if (isPointInRegion(px, py, 16, 16, mouseX, mouseY)) {
-                        hoveringOver = slot;
+        if (this.Field3140) {
+            EntityMinecartEmpty entityMinecartEmpty = this.Method5004();
+            if (entityMinecartEmpty != null) {
+                NetHandlerPlayClient netHandlerPlayClient = this.Field5233.getConnection();
+                if (netHandlerPlayClient == null) {
+                    Intrinsics.Method6551();
+                }
+                netHandlerPlayClient.sendPacket((Packet)new CPacketUseEntity((Entity)entityMinecartEmpty, EnumHand.MAIN_HAND));
+                this.Field3141 = null;
+            } else if (this.Field3141 == null) {
+                fe8 fe84 = this.Field3141 = new fe8();
+                if (fe84 == null) {
+                    Intrinsics.Method6551();
+                }
+                fe84.Method490();
+            } else {
+                fe8 fe85 = this.Field3141;
+                if (fe85 == null) {
+                    Intrinsics.Method6551();
+                }
+                if (fe85.Method491(1000.0)) {
+                    if (!this.Field3142) {
+                        this.Field3142 = true;
+                        Pyro.Field6182.Method8989("No more minecarts found!");
+                        if (!this.Method4990()) {
+                            this.Field3140 = false;
+                            this.Method5012(new f7M(String.valueOf(this.Field5233.player.getEntityId())));
+                            Pyro.Field6182.Method8989("Asking for an entity to ride");
+                        } else {
+                            fe8 fe86 = this.Field3149 = new fe8();
+                            if (fe86 == null) {
+                                Intrinsics.Method6551();
+                            }
+                            fe86.Method490();
+                            Pyro.Field6182.Method8989("Delaying for 10 seconds as we went through the track.");
+                            this.Field3140 = true;
+                            this.Field3139.clear();
+                        }
+                    } else {
+                        if (!this.Method4990() && this.Field3145 && !this.Field3147) {
+                            this.Field3147 = true;
+                            fe8 fe87 = this.Field3155 = new fe8();
+                            if (fe87 == null) {
+                                Intrinsics.Method6551();
+                            }
+                            fe87.Method490();
+                        }
+                        if (this.Method4990()) {
+                            if (this.Field5233.world.playerEntities.size() == 1) {
+                                List list = this.Method4978();
+                                if (list != null) {
+                                    this.Field3150.clear();
+                                    Iterable iterable = list;
+                                    boolean bl = false;
+                                    for (Object t : iterable) {
+                                        AbstractChestHorse abstractChestHorse = (AbstractChestHorse)t;
+                                        boolean bl2 = false;
+                                        this.Field3150.add(abstractChestHorse.getEntityId());
+                                    }
+                                    Pyro.Field6182.Method8989("Found " + list.size() + " duped donkies, dismounting");
+                                    this.Field3156 = true;
+                                    this.Field3137 = true;
+                                    this.Field3140 = false;
+                                    this.Method5012(new f7I());
+                                    this.Field3138 = new f7E(this);
+                                }
+                            } else {
+                                Pyro.Field6182.Method8989("Dupe failed! Reloading chunk");
+                                this.Field3139.clear();
+                                this.Field3142 = false;
+                            }
+                        }
                     }
                 }
             }
-
-            GlStateManager.disableLighting();
-
-            if (hoveringOver != null) {
-                // background of the gui
-                GlStateManager.disableLighting();
-                GlStateManager.disableDepth();
-                GlStateManager.colorMask(true, true, true, false);
-                this.drawGradientRect(
-                        rx + hoveringOver.xPos,
-                        ry + hoveringOver.yPos,
-                        rx + hoveringOver.xPos + 16,
-                        ry + hoveringOver.yPos + 16,
-                        -2130706433,
-                        -2130706433);
-                GlStateManager.colorMask(true, true, true, true);
-
-                // tool tip
-                GlStateManager.color(1.f, 1.f, 1.f, 1.0f);
-                GlStateManager.pushMatrix();
-                isModGeneratedToolTip = true;
-                renderToolTip(hoveringOver.getStack(), mouseX + 8, mouseY + 8);
-                isModGeneratedToolTip = false;
-                GlStateManager.popMatrix();
-                GlStateManager.enableDepth();
-            }
-
-            if (isPointInRegion(this.posX, this.posY, this.width, this.height, mouseX, mouseY)) {
-                isMouseInShulkerGui = true;
-            }
-
-            GlStateManager.disableBlend();
-            GlStateManager.color(1.f, 1.f, 1.f, 1.0f);
-        }
-
-        @Override
-        protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        }
-
-        @Override
-        public int compareTo(GuiShulkerViewer o) {
-            return Integer.compare(priority, o.priority);
-        }
-
-        public <U> U getParentShulker() {
-            return (U) this.parentShulker;
         }
     }
 
-    static class ShulkerContainer extends Container {
+    public void Method2399(boolean bl) {
+        this.Field3142 = bl;
+    }
 
-        public ShulkerContainer(ShulkerInventory inventory, int size) {
-            for (int i = 0; i < size; ++i) {
-                int x = i % 9 * 18;
-                int y = ((i / 9 + 1) * 18) + 1;
-                addSlotToContainer(new Slot(inventory, i, x, y));
-            }
-        }
+    public void Method4965(@Nullable fe8 fe82) {
+        this.Field3149 = fe82;
+    }
 
-        @Override
-        public boolean canInteractWith(EntityPlayer playerIn) {
-            return false;
+    public void Method4841(@NotNull List list) {
+        this.Field3135 = list;
+    }
+
+    public void Method5031() {
+        BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(null);
+    }
+
+    public void Method2407(@NotNull Entity entity) {
+        this.Method2283(entity.getPositionVector());
+    }
+
+    public void Method5032(boolean bl) {
+        this.Field3137 = bl;
+    }
+
+    public void Method5033() {
+        String string = "We can reconnect now!";
+        boolean bl = false;
+        System.out.println((Object)string);
+        if (this.Field5233.player == null) {
+            this.Field3146 = true;
+            this.Field3139.clear();
+            this.Field3140 = true;
         }
     }
 
-    static class ShulkerInventory implements IInventory {
-
-        private final List<ItemStack> contents;
-
-        public ShulkerInventory(List<ItemStack> contents) {
-            this.contents = contents;
-        }
-
-        @Override
-        public int getSizeInventory() {
-            return contents.size();
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return contents.isEmpty();
-        }
-
-        @Override
-        public ItemStack getStackInSlot(int index) {
-            return contents.get(index);
-        }
-
-        @Override
-        public ItemStack decrStackSize(int index, int count) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public ItemStack removeStackFromSlot(int index) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setInventorySlotContents(int index, ItemStack stack) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public int getInventoryStackLimit() {
-            return 27;
-        }
-
-        @Override
-        public void markDirty() {
-        }
-
-        @Override
-        public boolean isUsableByPlayer(EntityPlayer player) {
-            return false;
-        }
-
-        @Override
-        public void openInventory(EntityPlayer player) {
-        }
-
-        @Override
-        public void closeInventory(EntityPlayer player) {
-        }
-
-        @Override
-        public boolean isItemValidForSlot(int index, ItemStack stack) {
-            return index > 0 && index < contents.size() && contents.get(index).equals(stack);
-        }
-
-        @Override
-        public int getField(int id) {
-            return 0;
-        }
-
-        @Override
-        public void setField(int id, int value) {
-        }
-
-        @Override
-        public int getFieldCount() {
-            return 0;
-        }
-
-        @Override
-        public void clear() {
-        }
-
-        @Override
-        public String getName() {
-            return "";
-        }
-
-        @Override
-        public boolean hasCustomName() {
-            return false;
-        }
-
-        @Override
-        public ITextComponent getDisplayName() {
-            return new TextComponentString("");
-        }
+    @Nullable
+    public BlockPos Method5034() {
+        return this.Field3159;
     }
-    public void renderItemOverlayIntoGUI(ItemStack stack, int xPosition, int yPosition, @Nullable String text) {
-        if (!stack.isEmpty()) {
-            if (stack.getCount() != 1 || text != null) {
-                String s = text == null ? String.valueOf(stack.getCount()) : text;
-                GlStateManager.disableLighting();
-                GlStateManager.disableDepth();
-                GlStateManager.disableBlend();
-                mc.fontRenderer.drawStringWithShadow(s, (float) (xPosition + 19 - 2 - mc.fontRenderer.getStringWidth(s)), (float) (yPosition + 6 + 3) - 2, 16777215);
-                GlStateManager.enableLighting();
-                GlStateManager.enableDepth();
-                // Fixes opaque cooldown overlay a bit lower
-                // TODO: check if enabled blending still screws things up down the line.
-                GlStateManager.enableBlend();
-            }
 
-            if (stack.isItemDamaged()) {
-                GlStateManager.disableLighting();
-                GlStateManager.disableDepth();
-                GlStateManager.disableTexture2D();
-                GlStateManager.disableAlpha();
-                GlStateManager.disableBlend();
-                Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder bufferbuilder = tessellator.getBuffer();
-                double health = getDurabilityForDisplay(stack);
-                int rgbfordisplay = getRGBDurabilityForDisplay(stack);
-                int i = Math.round(13.0F - (float) health * 13.0F);
-                int j = rgbfordisplay;
-                this.draw(bufferbuilder, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
-                this.draw(bufferbuilder, xPosition + 2, yPosition + 13, i, 1, j >> 16 & 255, j >> 8 & 255, j & 255, 255);
-                GlStateManager.enableBlend();
-                GlStateManager.enableAlpha();
-                GlStateManager.enableTexture2D();
-                GlStateManager.enableLighting();
-                GlStateManager.enableDepth();
-            }
-
-            EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
-            float f3 = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Minecraft.getMinecraft().getRenderPartialTicks());
-
-            if (f3 > 0.0F) {
-                GlStateManager.disableLighting();
-                GlStateManager.disableDepth();
-                GlStateManager.disableTexture2D();
-                Tessellator tessellator1 = Tessellator.getInstance();
-                BufferBuilder bufferbuilder1 = tessellator1.getBuffer();
-                this.draw(bufferbuilder1, xPosition, yPosition + MathHelper.floor(16.0F * (1.0F - f3)), 16, MathHelper.ceil(16.0F * f3), 255, 255, 255, 127);
-                GlStateManager.enableTexture2D();
-                GlStateManager.enableLighting();
-                GlStateManager.enableDepth();
+    @f0g
+    public void Method277(@NotNull f43 f432) {
+        if (f432.Method5619() == f41.Pre && this.Field5233.currentScreen instanceof GuiDisconnected) {
+            if (this.Field3146 && this.Field3144.Method491(35000.0)) {
+                GuiScreen guiScreen = this.Field5233.currentScreen;
+                if (guiScreen == null) {
+                    throw new TypeCastException("null cannot be cast to non-null type dev.nuker.pyro.mixin.GuiDisconnectedAccessor");
+                }
+                Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new GuiConnecting(((GuiDisconnectedAccessor)guiScreen).Method1350(), Minecraft.getMinecraft(), f83.Field3315));
             }
         }
     }
 
-    private void draw(BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
-        renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        renderer.pos(x + 0, y + 0, 0.0D).color(red, green, blue, alpha).endVertex();
-        renderer.pos(x + 0, y + height, 0.0D).color(red, green, blue, alpha).endVertex();
-        renderer.pos(x + width, y + height, 0.0D).color(red, green, blue, alpha).endVertex();
-        renderer.pos(x + width, y + 0, 0.0D).color(red, green, blue, alpha).endVertex();
-        Tessellator.getInstance().draw();
+    public void Method5035(@Nullable MessagePassingQueue.Consumer consumer) {
+        this.Field3138 = consumer;
     }
 
-
-    public double getDurabilityForDisplay(ItemStack stack) {
-        return (double) stack.getItemDamage() / (double) stack.getMaxDamage();
+    @Nullable
+    public Thread Method5036() {
+        return this.Field3133;
     }
 
+    @Nullable
+    public fe8 Method5037() {
+        return this.Field3155;
+    }
 
-    public int getRGBDurabilityForDisplay(ItemStack stack) {
-        return MathHelper.hsvToRGB(Math.max(0.0F, (float) (1.0D - this.getDurabilityForDisplay(stack))) / 3.0F, 1.0F, 1.0F);
+    @Nullable
+    public Vec3d Method5038() {
+        return this.Field3153;
+    }
+
+    public void Method5039(@Nullable ServerSocket serverSocket) {
+        this.Field3132 = serverSocket;
+    }
+
+    @f0g
+    public void Method203(@NotNull f4u f4u2) {
+        if (!f4u2.Method7947() && f4u2.Method5619() == f41.Pre && this.Method4990()) {
+            if (this.Field3154) {
+                this.Field3154 = false;
+                BlockPos blockPos = this.Field3159;
+                if (blockPos == null) {
+                    Intrinsics.Method6551();
+                }
+                BlockPos blockPos2 = blockPos;
+                EnumFacing enumFacing = few.Method848(blockPos2, true);
+                float[] arrf = few.Method835().Method850(blockPos2, enumFacing);
+                f4u2.Method7948();
+                f4u2.Method5653(arrf[0]);
+                f4u2.Method5647(arrf[1]);
+                RayTraceResult rayTraceResult = few.Method835().Method849(arrf[0], arrf[1]);
+                Ref.FloatRef floatRef = new Ref.FloatRef();
+                floatRef.Field5298 = 0.0f;
+                Ref.FloatRef floatRef2 = new Ref.FloatRef();
+                floatRef2.Field5298 = 0.0f;
+                Ref.FloatRef floatRef3 = new Ref.FloatRef();
+                floatRef3.Field5298 = 0.0f;
+                if (rayTraceResult != null) {
+                    BlockPos blockPos3 = blockPos2;
+                    if (blockPos3 == null) {
+                        Intrinsics.Method6551();
+                    }
+                    floatRef.Field5298 = (float)(rayTraceResult.hitVec.x - (double)blockPos3.getX());
+                    floatRef2.Field5298 = (float)(rayTraceResult.hitVec.y - (double)blockPos2.getY());
+                    floatRef3.Field5298 = (float)(rayTraceResult.hitVec.z - (double)blockPos2.getZ());
+                }
+                f4u2.Method5816(new f7C(this, blockPos2, enumFacing, floatRef, floatRef2, floatRef3));
+            }
+        }
+    }
+
+    @NotNull
+    public List Method5040() {
+        return this.Field3135;
+    }
+
+    public void Method5041(@NotNull f7M f7M2, @NotNull f7B f7B2) {
+        Pyro.Field6182.Method8989("recieved entityid with " + f7M2.Method5103());
+        AbstractChestHorse abstractChestHorse = null;
+        float f = 100.0f;
+        for (Entity entity : this.Field5233.world.loadedEntityList) {
+            float f2;
+            if (!(entity instanceof AbstractChestHorse)) continue;
+            if (((AbstractChestHorse)entity).hasChest() || !((AbstractChestHorse)entity).isRiding() || !(((AbstractChestHorse)entity).getRidingEntity() instanceof EntityBoat) || !((AbstractChestHorse)entity).getPassengers().isEmpty() || !((f2 = this.Field5233.player.getDistance(entity)) < f)) continue;
+            f = f2;
+            abstractChestHorse = (AbstractChestHorse)entity;
+        }
+        if (abstractChestHorse != null) {
+            this.Method4982(new f7N(String.valueOf(abstractChestHorse.getEntityId())), f7B2);
+            Pyro.Field6182.Method8989("Found donkey EntityID " + abstractChestHorse.getEntityId() + " for " + f7M2.Method5103() + " to ride");
+        }
+    }
+
+    @f0g
+    public void Method5042(@NotNull f4r f4r2) {
+        this.Field5233.player.setPosition(f4r2.Method5852().posX, f4r2.Method5852().posY, f4r2.Method5852().posZ);
+        if (f4r2.Method5852() instanceof EntityMinecartEmpty) {
+            if (!this.Field3139.contains(f4r2.Method5852().getEntityId())) {
+                this.Field3139.add(f4r2.Method5852().getEntityId());
+            } else {
+                Pyro.Field6182.Method8989("WARNING! Ridden a duplicated id in the minecart list!");
+            }
+        }
+    }
+
+    @NotNull
+    public CopyOnWriteArrayList Method5043() {
+        return this.Field3139;
+    }
+
+    @NotNull
+    public fe8 Method5044() {
+        return this.Field3144;
+    }
+
+    public void Method5045(boolean bl) {
+        this.Field3140 = bl;
+    }
+
+    public void Method2283(@NotNull Vec3d vec3d) {
+        this.Method5002();
+        GoalXZ goalXZ = new GoalXZ(new BetterBlockPos(vec3d.x, vec3d.y, vec3d.z));
+        BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath((Goal)goalXZ);
+        this.Field3153 = vec3d;
+        this.Field3152 = true;
     }
 }
